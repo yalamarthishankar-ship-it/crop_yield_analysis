@@ -21,8 +21,8 @@ st.set_page_config(
 )
 
 # Data Sources
-CROP_DATA_PATH = r"Inputs\India Agriculture Crop Production.csv"
-MAPS_DATA_PATH = r"Inputs\india_state_geo.json"
+CROP_DATA_PATH = r"India Agriculture Crop Production.csv"
+MAPS_DATA_PATH = r"india_state_geo.json"
 
 # Data Loading Helpers
 @st.cache_data
