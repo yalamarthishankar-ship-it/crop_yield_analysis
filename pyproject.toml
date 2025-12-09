@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "streamlit dashboard"
+version = "0.1.0"
+description = ""
+authors = ["Yalamarthi Ravi Shankar <yalamarthi.shankar@inverv.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+pandas = "^2.3.3"
+geopandas = "^1.1.1"
+streamlit = "^1.52.1"
+numpy = "^2.3.5"
+plotly = "^6.5.0"
+matplotlib = "^3.10.7"
+reportlab = "^4.4.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
