@@ -4,3 +4,4 @@ __pycache__/
 .env
 poetry.lock
 .ipynb_checkpoints/
+*.mp4
