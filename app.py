@@ -26,6 +26,19 @@ MAPS_DATA_PATH = r"D:\Quarterly Evaluations\20251209_Streamlit Dashboard\Inputs\
 # Data Loading Helpers
 @st.cache_data
 def load_data(path: str) -> pd.DataFrame:
+    """
+    Loads and preprocesses crop production data from a CSV file.
+
+    Parameters:
+        path (str): The file path to the CSV dataset.
+
+    Returns:
+        pd.DataFrame: A pandas DataFrame containing the clean crop data with standardized column names
+                      and numeric conversions for key metrics (Year, Area, Production, Yield).
+
+    Raises:
+        ValueError: If required columns are missing from the CSV.
+    """
     df = pd.read_csv(path)
 
     # Standardize column names
@@ -48,6 +61,16 @@ def load_data(path: str) -> pd.DataFrame:
 
 @st.cache_data
 def load_geojson(path: str):
+    """
+    Loads the GeoJSON file for Indian states and standardizes state names for mapping.
+
+    Parameters:
+        path (str): The file path to the GeoJSON file.
+
+    Returns:
+        dict: A JSON object representing the map features, or None if loading fails.
+              State names are harmonized to match the crop dataset (e.g., 'Orissa' -> 'Odisha').
+    """
     try:
         gj = gd.read_file(MAPS_DATA_PATH)
         
@@ -189,7 +212,29 @@ def build_policy_brief(
     selected_seasons: List[str],
     selected_years: List[int],
 ) -> str:
-    """Generate a simple text policy brief from current filters + stats."""
+    """
+    Generates a text-based policy brief summarizing the analysis results.
+
+    The brief includes:
+    1. Context (selected filters).
+    2. Aggregate indicators (Total Area, Production, Yield).
+    3. Yield trend overview.
+    4. Top producing states.
+    5. List of states with significant yield decline.
+    6. Recommended follow-up actions.
+
+    Parameters:
+        df_filtered (pd.DataFrame): The filtered dataset.
+        ts_df (pd.DataFrame): Time-series data for the selected context.
+        decline_df (pd.DataFrame): DataFrame containing states with yield decline.
+        selected_states (List[str]): List of selected states.
+        selected_crops (List[str]): List of selected crops.
+        selected_seasons (List[str]): List of selected seasons.
+        selected_years (List[int]): List of selected years.
+
+    Returns:
+        str: A multi-line string containing the formatted policy brief.
+    """
     if df_filtered.empty:
         return "No data available for the selected filters to generate a policy brief."
 
@@ -285,6 +330,17 @@ Generated automatically from the Crop Production & Yield Dashboard.
 
 # UI Components
 def main():
+    """
+    The main entry point for the Streamlit application.
+
+    This function:
+    - Sets up the dashboard layout and sidebar.
+    - Loads data resources.
+    - Handles user input for filtering data.
+    - Renders the "Dashboard" view with metrics, charts, and maps.
+    - Renders the "Map View" for state-specific deep dives.
+    - Generates and allows downloading of the Policy Brief PDF.
+    """
     st.title("Crop Production & Yield Dashboard")
 
     # Load data
