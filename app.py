@@ -1,5 +1,6 @@
 import io
 import json
+import datetime
 from typing import List
 
 import numpy as np
@@ -371,7 +372,11 @@ def main():
     all_states = sorted(df["State"].dropna().unique().tolist())
     all_crops = sorted(df["Crop"].dropna().unique().tolist())
     all_seasons = sorted(df["Season"].dropna().unique().tolist())
-    all_years = sorted(df["Year"].dropna().unique().tolist())
+    
+    # Year Range: Min available year to Current Year
+    min_year = int(df["Year"].min()) if not df["Year"].empty else 2000
+    current_year = datetime.datetime.now().year
+    all_years = list(range(min_year, current_year + 1))
     
     if view == "Dashboard":
         # ---- Filter Selection Grid ----
@@ -398,7 +403,7 @@ def main():
         
         with grid1[2]:
             selected_years = st.multiselect(
-                "Year", all_years, default=list(range(2016, 2021))
+                "Year", all_years, default=list(range(2016, 2022))
             )
         
         st.markdown("---")
@@ -412,6 +417,10 @@ def main():
             seasons=selected_seasons,
             years=selected_years,
         )
+
+        if filtered_df.empty:
+            st.warning("No data found for the selected filters. Please adjust your criteria.")
+            st.stop()
         
         # ---- Top Level Summary Cards ----
         total_area = filtered_df["Area"].sum()
