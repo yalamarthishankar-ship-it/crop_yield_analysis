@@ -21,8 +21,8 @@ st.set_page_config(
 )
 
 # Data Sources
-CROP_DATA_PATH = r"D:\Quarterly Evaluations\20251209_Streamlit Dashboard\Inputs\India Agriculture Crop Production.csv"
-MAPS_DATA_PATH = r"D:\Quarterly Evaluations\20251209_Streamlit Dashboard\Inputs\india_state_geo.json"
+CROP_DATA_PATH = r"Inputs\India Agriculture Crop Production.csv"
+MAPS_DATA_PATH = r"Inputs\india_state_geo.json"
 
 # Data Loading Helpers
 @st.cache_data
